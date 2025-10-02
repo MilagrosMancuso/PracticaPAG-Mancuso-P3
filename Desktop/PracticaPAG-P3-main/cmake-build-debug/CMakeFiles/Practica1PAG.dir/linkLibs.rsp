@@ -1,0 +1,1 @@
+  -LC:/Users/milin/.conan2/p/b/glfwfe0a5f4dbee05/p/lib  C:/Users/milin/.conan2/p/b/glfwfe0a5f4dbee05/p/lib/libglfw3.a -lgdi32 -lopengl32 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

@@ -1,0 +1,3 @@
+C:\Users\milin\AppData\Local\Programs\CLion\bin\cmake\win\x64\bin\cmake.exe -E rm -f CMakeFiles\Practica1PAG.dir/objects.a
+C:\Users\milin\AppData\Local\Programs\CLion\bin\mingw\bin\ar.exe qc CMakeFiles\Practica1PAG.dir/objects.a @CMakeFiles\Practica1PAG.dir\objects1.rsp
+C:\Users\milin\AppData\Local\Programs\CLion\bin\mingw\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\Practica1PAG.dir/objects.a -Wl,--no-whole-archive -o Practica1PAG.exe -Wl,--out-implib,libPractica1PAG.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Practica1PAG.dir\linkLibs.rsp

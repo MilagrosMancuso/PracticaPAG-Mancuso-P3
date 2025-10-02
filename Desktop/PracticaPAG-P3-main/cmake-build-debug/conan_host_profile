@@ -1,0 +1,11 @@
+[settings]
+arch=x86_64
+os=Windows
+compiler=gcc
+compiler.version=13
+compiler.cppstd=20
+compiler.libcxx=libstdc++11
+build_type=Debug
+[conf]
+tools.cmake.cmaketoolchain:generator=MinGW Makefiles
+tools.build:compiler_executables={"c":"C:/Users/milin/AppData/Local/Programs/CLion/bin/mingw/bin/gcc.exe","cpp":"C:/Users/milin/AppData/Local/Programs/CLion/bin/mingw/bin/g++.exe","rc":"C:/Users/milin/AppData/Local/Programs/CLion/bin/mingw/bin/windres.exe"}

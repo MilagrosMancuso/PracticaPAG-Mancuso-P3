@@ -1,0 +1,3 @@
+C:/Users/milin/Desktop/PracticaPAG-P3-main/cmake-build-debug/CMakeFiles/Practica1PAG.dir
+C:/Users/milin/Desktop/PracticaPAG-P3-main/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/milin/Desktop/PracticaPAG-P3-main/cmake-build-debug/CMakeFiles/rebuild_cache.dir
