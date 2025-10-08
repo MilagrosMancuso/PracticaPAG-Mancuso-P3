@@ -95,3 +95,79 @@ Esto provoca que si la ventana es más ancha que alta, el triángulo se **ensanc
 
 La solución sería aplicar una **matriz de proyección** o bien ajustar
 las coordenadas de dibujo en función del tamaño de la ventana.
+
+
+# Proceso de Desacoplamiento:
+
+En esta práctica se plantea desacoplar la gestion de shaders y permitir la carga de forma dinamica de los mismos, utilizando un nombre base introdcuido por el usuario.
+
+
+## Solución Propuesta.
+Mantenemos una estructura simple pero dividida:
+
+-   `**Renderer**`: dueño del _shader program_ en uso, responsable del ciclo de render y de los recursos (VAO/VBO/IBO).
+
+-   `**ShaderProgram**`: encapsula la lectura de ficheros GLSL, compilación de VS/FS y enlace del programa.
+
+-   `**GUI**`: interfaz con ImGui para introducir el **nombre base** de los shaders y lanzar su carga; además muestra un **log** con los mensajes del sistema y un **selector de color** de fondo.
+
+
+La carga de shaders se hace con un **patrón de reemplazo seguro** :
+
+1.  `ShaderProgram` compila y linkea en **objetos temporales**.
+
+2.  **Sólo si** todo sale bien, `Renderer` libera el programa anterior y **adopta** el nuevo.
+
+3.  Si hay error, **no se toca** el programa actual (la app sigue dibujando)
+
+## Cambios realizados.
+-   **Clase** `**ShaderProgram**` (nueva)
+
+   -   `GLuint loadFromBaseName(const std::string& baseName, std::vector<std::string>& msgs);`
+
+   -   `void destroy();` (libera recursos GL del programa)
+
+   -   `void checkCompileErrors(GLuint obj, const std::string& type, std::vector<std::string>& outMsgs);`
+
+   -   `std::string loadFileToString(const std::string& filename, bool& ok, std::string& err);`
+
+
+
+-   **Clase** `**Renderer**` (modificada)
+
+   -   **Atributo**: `ShaderProgram* shaderProg` (miembro, no global)
+
+   -   **Métodos**:
+
+      -   `void creaShaderProgram();` (carga por defecto `pag03`)
+
+      -   `void loadShaderProgramFromBase(const std::string& baseName);` (reemplazo seguro)
+
+      -   `void creaModelo();` (VAO/VBO/IBO del triángulo)
+
+      -   Guardas defensivas en `refrescar()` para no dibujar si `idSP/VAO/IBO == 0`.
+
+-   **Clase** `**GUI**`
+
+   -   **Atributos**: `char _baseName[128]` (buffer para `InputText`), `float _bgColor[3]`, `bool _autoScrollLog`
+
+   -   **Métodos**: `void dibuja();` con:
+
+      -   `ImGui::InputText("Base name##shader", _baseName, IM_ARRAYSIZE(_baseName))`
+
+      -   Botón **Load** → `Renderer::loadShaderProgramFromBase(_baseName)`
+
+      -   Ventana **Log** que muestra `Renderer::getMensaje()`
+
+
+
+
+-   **Eliminación del puntero global**  `ShaderProgram* shaderProg` y uso exclusivo del **miembro** de `Renderer`.
+
+
+-   Simplificación de `Renderer::~Renderer()` para liberar en orden: IBO/VBO/VAO y el `ShaderProgram`.
+
+
+### Diagrama UML
+
+![Diagrama UML](./pag3Mancuso.png)
